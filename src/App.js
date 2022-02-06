@@ -25,6 +25,13 @@ function Word({ children, ...props }) {
   })
   return <Text ref={ref} onPointerOver={over} onPointerOut={out} {...props} {...fontProps} children={children} />
 }
+function generateWord() {
+  const wordList = ['React', 'JavaScript', 'Figma', 'SQL', 'Laravel', 'Grav CMS', 'Git', 'WordPress', 'HTML', 'CSS', 'PHP', 'Django', 'Python', 'SCSS', 'Linux', 'Adobe XD']
+  return wordList[randInt(wordList.length)];
+}
+function randInt(lessThan) {
+  return Math.floor(Math.random() * lessThan);
+}
 
 function Cloud({ count = 4, radius = 20 }) {
   // Create a count x count random words with spherical distribution
@@ -35,7 +42,7 @@ function Cloud({ count = 4, radius = 20 }) {
     const thetaSpan = (Math.PI * 2) / count
     for (let i = 1; i < count + 1; i++)
       // Taken from https://discourse.threejs.org/t/can-i-place-obects-on-a-sphere-surface-evenly/4773/6
-      for (let j = 0; j < count; j++) temp.push([new THREE.Vector3().setFromSpherical(spherical.set(radius, phiSpan * i, thetaSpan * j)), randomWord()])
+      for (let j = 0; j < count; j++) temp.push([new THREE.Vector3().setFromSpherical(spherical.set(radius, phiSpan * i, thetaSpan * j)), generateWord()])
     return temp
   }, [count, radius])
   return words.map(([pos, word], index) => <Word key={index} position={pos} children={word} />)
